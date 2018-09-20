@@ -1,13 +1,19 @@
 import gc
 
 
-class animal:
+class Animal:
     reference = ''
     name = ''
     weight = ''
     noise = ''
     male = 0  # 0-ж 1-м
     hungry = True
+
+    def __init__(self, reference, name, weight, male):
+        self.reference = reference
+        self.name = name
+        self.weight = weight
+        self.male = male
 
     def get_noise(self):
         return self.noise
@@ -19,7 +25,7 @@ class animal:
         self.hungry = False
 
 
-class birds(animal):
+class Birds(Animal):
     eggs_count = 1
 
     def get_egg(self):
@@ -32,11 +38,11 @@ class birds(animal):
             return 0
 
 
-class livestock(animal):  # класс заглушка, если потрбеуется добавление общих свойств для скота.
+class Livestock(Animal):  # класс заглушка, если потрбеуется добавление общих свойств для скота.
     get_hooves = True
 
 
-class cows(livestock):
+class Cows(Livestock):
     reference = 'Корова'
     noise = 'МУУУ'
     milk_count = 8
@@ -57,7 +63,7 @@ class cows(livestock):
         self.weight = weight
 
 
-class goats(livestock):
+class Goats(Livestock):
     reference = 'Коза'
     noise = 'МЕЕЕ'
     milk_count = 3
@@ -77,7 +83,7 @@ class goats(livestock):
         self.weight = weight
 
 
-class sheeps(livestock):
+class Sheeps(Livestock):
     reference = 'Овца'
     noise = 'БЕЕЕ'
     last_shear = 1  # последний раз пострижена
@@ -93,7 +99,7 @@ class sheeps(livestock):
         self.weight = weight
 
 
-class gooses(birds):
+class Gooses(Birds):
     reference = 'Гусь'
     noise = 'ГА-ГА-ГА'
     color = ''
@@ -105,7 +111,7 @@ class gooses(birds):
         self.male = male
 
 
-class chickens(birds):
+class Chickens(Birds):
     reference = 'Курица'
 
     def __init__(self, name, weight, male, noise):
@@ -115,7 +121,7 @@ class chickens(birds):
         self.noise = noise
 
 
-class ducks(birds):
+class Ducks(Birds):
     reference = 'Утка'
     noise = 'Кря'
 
@@ -153,16 +159,16 @@ def lets_shear(animal_name):
     print()
 
 
-goose1 = gooses('Серый', '18', 'Серый', 1)
-goose2 = gooses('Белый', '15', 'Белый', 0)
-chicken1 = chickens('Ко-Ко', '10', 0, 'КО-КО-КО')
-chicken2 = chickens('Кукареку', '11', 1, 'Кукареку')
-duck1 = ducks('Кряква', 6)
-cow = cows("Маньку", 200)
-goat1 = goats("Рога", 30)
-goat2 = goats("Копыта", 32)
-sheep1 = sheeps("Барашек", 20)
-sheep2 = sheeps("Кудрявый", 20)
+goose1 = Gooses('Серый', '18', 'Серый', 1)
+goose2 = Gooses('Белый', '15', 'Белый', 0)
+chicken1 = Chickens('Ко-Ко', '10', 0, 'КО-КО-КО')
+chicken2 = Chickens('Кукареку', '11', 1, 'Кукареку')
+duck1 = Ducks('Кряква', 6)
+cow = Cows("Маньку", 200)
+goat1 = Goats("Рога", 30)
+goat2 = Goats("Копыта", 32)
+sheep1 = Sheeps("Барашек", 20)
+sheep2 = Sheeps("Кудрявый", 20)
 
 print('Корм животных:')
 sheep2.hungry = False
@@ -207,7 +213,7 @@ weight_sum = 0
 heavy = 0
 heavy_name = ''
 for obj in gc.get_objects():
-    if isinstance(obj, animal):
+    if isinstance(obj, Animal):
         # print(obj.__dict__)
         weight_sum += int(obj.__dict__['weight'])
         if int(obj.__dict__['weight']) > heavy:
